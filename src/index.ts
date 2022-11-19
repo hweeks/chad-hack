@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import fs from "fs";
+import path from "path"
 
 const app = express();
 
@@ -16,8 +17,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.static(path.resolve(__dirname, "..", "static")))
+
 app.get("/", (req, res) => {
-  res.send("hey");
+  res.render("index")
 });
 
 app.post("/file", (req, res) => {
