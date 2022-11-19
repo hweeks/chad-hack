@@ -7,6 +7,15 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  process.stdin.write("headers \n");
+  process.stdin.write(JSON.stringify(req.headers, null, 2));
+  process.stdin.write("body \n");
+  process.stdin.write(JSON.stringify(req.body, null, 2));
+  process.stdin.write("\n");
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("hey");
 });
